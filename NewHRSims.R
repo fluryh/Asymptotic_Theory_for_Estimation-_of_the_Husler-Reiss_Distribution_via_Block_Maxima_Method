@@ -26,17 +26,15 @@ grad <- function(l,X,Y){
   return(sum)
 }
 
-log_liks <- rep(0,100)
-for(j in 1:100){
+log_liks <- rep(0,1000)
+for(j in 1:1000){
   samps <- matrix(data = rep(0,2*269),ncol= 2) 
   for(k in 1:269){
     XY_scaled <- apply(mvrnorm(37138, mu = c(0,0), Sigma = matrix(c(1, p2(1.25,bm37138), p2(1.25,bm37138), 1), ncol=2))
                        ,2,max)
     samps[k,] <- XY_scaled
   }
-  # samps[,1] <- (samps[,1] - mean(samps[,1]))* sqrt(var(loghr[,1])/var(samps[,1])) + mean(loghr[,1])
-  # samps[,2] <- (samps[,2] - mean(samps[,2]))* sqrt(var(loghr[,2])/var(samps[,2])) + mean(loghr[,2])
-  log_liks[j] <- grad(1.25, samps[,1], samps[,2])/sqrt(565)
+  log_liks[j] <- grad(1.25, samps[,1], samps[,2])/sqrt(269)
 }
 mean(log_liks)
 hist(log_liks)
